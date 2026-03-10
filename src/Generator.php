@@ -99,6 +99,12 @@ class Generator
             $this->disableClear = true;
         }
 
+        if ($this->files->exists(public_path('hot'))) {
+            throw GenerationFailedException::withConsoleMessage(
+                '<fg=red>[✘]</> Generation aborted. Vite hot file detected (public/hot). Asset URLs would point to the Vite dev server (localhost) and be broken in production. Stop the dev server and run `npm run build` before generating.'
+            );
+        }
+
         $this
             ->bindGlide()
             ->clearDirectory()
